@@ -1,0 +1,13 @@
+# Copie ce fichier en "terraform.tfvars" (jamais commité, voir .gitignore)
+# et remplis tes propres valeurs.
+
+aws_region  = "us-east-1"
+bucket_name = "yvansaf-portfolio-manuscrit" # doit être globalement unique sur AWS
+
+github_repo   = "yvansaf/portfolio-manuscrit" # ton owner/repo exact
+github_branch = "main"
+
+cloudfront_price_class = "PriceClass_100"
+
+# Laisse vide si tu n'as pas encore de nom de domaine :
+custom_domain = ""
