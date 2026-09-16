@@ -1,14 +1,14 @@
 # -----------------------------------------------------------------------------
-# cloudfront.tf, CDN devant le bucket S3 privé
+# cloudfront.tf, CDN in front of the private S3 bucket
 #
-# Rôle de CloudFront ici : HTTPS gratuit, cache global, et point d'accès
-# unique autorisé au bucket S3 (via OAC). Sans CloudFront, un bucket S3
-# privé ne serait tout simplement pas accessible depuis un navigateur.
+# CloudFront's role here: free HTTPS, global caching, and the single
+# authorized access point to the private bucket (through OAC). Without
+# CloudFront, a private S3 bucket simply would not be reachable from a browser.
 # -----------------------------------------------------------------------------
 
-# Origin Access Control : le mécanisme moderne (remplace l'ancien OAI) qui
-# permet à CloudFront de signer ses requêtes vers S3, prouvant que la
-# requête vient bien de CETTE distribution.
+# Origin Access Control: the modern mechanism (replacing the old OAI) that
+# lets CloudFront sign its requests to S3, proving that the request really
+# comes from THIS distribution.
 resource "aws_cloudfront_origin_access_control" "site" {
   name                              = "${var.project_name}-oac"
   origin_access_control_origin_type = "s3"
@@ -31,14 +31,14 @@ resource "aws_cloudfront_distribution" "site" {
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD"]
-    cached_methods         = ["GET", "HEAD"]
+    cached_methods          = ["GET", "HEAD"]
     target_origin_id       = "s3-${aws_s3_bucket.site.id}"
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
 
-    # Politique de cache managée par AWS ("CachingOptimized") : bonnes
-    # valeurs par défaut pour du contenu statique, pas besoin de la
-    # réinventer. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html
+    # AWS managed cache policy ("CachingOptimized"): good default values
+    # for static content, no need to reinvent it.
+    # https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html
     cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
   }
 
@@ -48,10 +48,10 @@ resource "aws_cloudfront_distribution" "site" {
     }
   }
 
-  # Pas de domaine custom : on utilise le certificat CloudFront par défaut
-  # (fonctionne immédiatement sur le domaine *.cloudfront.net).
-  # Si custom_domain est renseigné, voir la ressource ACM commentée
-  # plus bas et décommente aliases + viewer_certificate custom.
+  # No custom domain: using the default CloudFront certificate
+  # (works immediately on the *.cloudfront.net domain).
+  # If custom_domain is set, see the commented ACM resource
+  # further below and uncomment aliases + custom viewer_certificate.
   viewer_certificate {
     cloudfront_default_certificate = var.custom_domain == "" ? true : null
     acm_certificate_arn            = var.custom_domain != "" ? aws_acm_certificate.site[0].arn : null
@@ -63,10 +63,10 @@ resource "aws_cloudfront_distribution" "site" {
 }
 
 # -----------------------------------------------------------------------------
-# Domaine custom (optionnel), ne se déploie que si var.custom_domain est
-# renseigné. Le certificat ACM pour CloudFront DOIT être créé dans
-# us-east-1, quelle que soit la région du reste de l'infra, c'est une
-# contrainte AWS, pas un choix arbitraire de ce projet.
+# Custom domain (optional), only deploys if var.custom_domain is set.
+# The ACM certificate for CloudFront MUST be created in us-east-1,
+# regardless of the region used for the rest of the infrastructure, this is
+# an AWS requirement, not an arbitrary choice made by this project.
 # -----------------------------------------------------------------------------
 
 provider "aws" {
@@ -93,10 +93,10 @@ resource "aws_acm_certificate" "site" {
   }
 }
 
-# Validation DNS du certificat : nécessite que ton domaine soit sur
-# Route53 (ou que tu ajoutes les enregistrements CNAME manuellement chez
-# ton registrar si tu utilises un autre DNS). Décommente et adapte si tu
-# gères ta zone via Route53 dans ce même projet Terraform.
+# DNS validation of the certificate: requires your domain to be on
+# Route53 (or you add the CNAME records manually with your registrar if
+# you use a different DNS). Uncomment and adjust if you manage your zone
+# through Route53 in this same Terraform project.
 #
 # resource "aws_route53_record" "cert_validation" {
 #   for_each = var.custom_domain != "" ? {

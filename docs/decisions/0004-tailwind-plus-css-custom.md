@@ -1,38 +1,19 @@
-# 0004. Tailwind CSS pour l'essentiel, CSS pur pour les animations sur-mesure
+# 0004. Tailwind CSS for the essentials, plain CSS for custom animations
 
-## Contexte
+## Context
 
-Le site combine une mise en page classique (espacement, typographie,
-couleurs, grilles) avec des animations très spécifiques : rotation 3D de
-la couverture façon page qui se tourne, tomoe rotatif, curseur custom en
-canvas, effet d'encre au survol.
+The site combines a fairly standard layout (spacing, typography, colors, grids) with very specific animations: a 3D page turn rotation for the cover, a spinning tomoe, a custom canvas cursor, an ink hover effect.
 
-## Décision
+## Decision
 
-**Tailwind CSS** pour l'ensemble de la mise en page et du design system
-(couleurs kraft/encre/rouge en thème custom, espacement, typographie),
-et un **fichier CSS séparé** (`animations.css`) pour les keyframes et
-effets impossibles à exprimer proprement en utilitaires.
+**Tailwind CSS** for the whole layout and design system (custom kraft/ink/red color theme, spacing, typography), and a **separate CSS file** (`animations.css`) for the keyframes and effects that cannot be expressed cleanly with utility classes.
 
-## Pourquoi pas l'un des deux exclusivement ?
+## Why not just one of the two?
 
-- **Tout en Tailwind** aurait forcé à écrire des valeurs arbitraires
-  (`[transform:rotateY(-150deg)]`) partout pour les animations les plus
-  complexes, au-delà d'un certain niveau de complexité, les utilitaires
-  perdent leur intérêt (lisibilité, autocomplétion) face à un vrai bloc
-  `@keyframes`.
-- **Tout en CSS pur** aurait fait perdre la vitesse d'itération de
-  Tailwind sur tout ce qui est mise en page basique (90 % du travail
-  visuel du site), pour un gain de contrôle qui n'était nécessaire que
-  sur une poignée d'éléments.
+- **All Tailwind** would have forced arbitrary values (`[transform:rotateY(-150deg)]`) everywhere for the more complex animations. Past a certain point, utility classes lose their advantage (readability, autocomplete) compared to a real `@keyframes` block.
+- **All plain CSS** would have given up Tailwind's iteration speed on everything that is basic layout (90% of the site's visual work), for a level of control that was only needed on a handful of elements.
 
-## Conséquences / compromis acceptés
+## Consequences / accepted trade-offs
 
-- Deux systèmes à maintenir en parallèle plutôt qu'un seul, nécessite
-  une convention claire : tout ce qui est *layout* passe par des classes
-  Tailwind directement dans le JSX, tout ce qui est *animation
-  chorégraphiée* passe par des classes ciblées définies dans
-  `animations.css`, jamais l'inverse.
-- Le thème Tailwind (`tailwind.config.ts`) reprend les tokens exacts du
-  site (couleurs, polices) pour que les deux systèmes restent
-  visuellement cohérents entre eux.
+- Two systems to maintain in parallel instead of one, which requires a clear convention: everything that is *layout* goes through Tailwind classes directly in the JSX, everything that is *choreographed animation* goes through targeted classes defined in `animations.css`, never the other way around.
+- The Tailwind theme (`tailwind.config.ts`) reuses the site's exact tokens (colors, fonts) so both systems stay visually consistent with each other.

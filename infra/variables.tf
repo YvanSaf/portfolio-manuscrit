@@ -1,58 +1,58 @@
 # -----------------------------------------------------------------------------
-# variables.tf, toutes les valeurs à personnaliser sont ici.
-# Remplis tes propres valeurs dans terraform.tfvars (copie depuis
-# terraform.tfvars.example, jamais commité tel quel).
+# variables.tf, every value you should customize lives here.
+# Fill in your own values in terraform.tfvars (copy it from
+# terraform.tfvars.example, never commit it as is).
 # -----------------------------------------------------------------------------
 
 variable "aws_region" {
-  description = "Région AWS où déployer les ressources. us-east-1 est aussi la seule région valable pour le certificat ACM utilisé par CloudFront, donc rester sur us-east-1 partout simplifie l'ensemble du projet."
+  description = "AWS region to deploy resources in. us-east-1 is also the only valid region for the ACM certificate used by CloudFront, so staying on us-east-1 everywhere keeps the project simple."
   type        = string
   default     = "us-east-1"
 }
 
 variable "project_name" {
-  description = "Nom court du projet, utilisé dans les tags et certains noms de ressources."
+  description = "Short project name, used in tags and some resource names."
   type        = string
   default     = "portfolio-manuscrit"
 }
 
 variable "environment" {
-  description = "Nom de l'environnement (prod, staging...). Pour un portfolio perso, 'prod' suffit."
+  description = "Environment name (prod, staging...). For a personal portfolio, 'prod' is enough."
   type        = string
   default     = "prod"
 }
 
 variable "bucket_name" {
   description = <<-EOT
-    Nom du bucket S3. DOIT être globalement unique sur tout AWS (pas juste
-    ton compte), "portfolio-manuscrit" seul sera très probablement déjà pris.
-    Suggestion : préfixe avec ton nom, ex. "yvansaf-portfolio-manuscrit".
+    S3 bucket name. MUST be globally unique across all of AWS (not just
+    your account), "portfolio-manuscrit" alone will most likely already be taken.
+    Suggestion: prefix it with your name, e.g. "yvansaf-portfolio-manuscrit".
   EOT
   type = string
 }
 
 variable "github_repo" {
   description = <<-EOT
-    Ton repo GitHub au format "owner/repo", ex. "yvansaf/portfolio-manuscrit".
-    Utilisé pour restreindre le rôle IAM OIDC à CE repo uniquement, personne
-    d'autre ne pourra assumer ce rôle depuis GitHub Actions.
+    Your GitHub repo in "owner/repo" format, e.g. "yvansaf/portfolio-manuscrit".
+    Used to restrict the OIDC IAM role to THIS repo only, nobody
+    else can assume this role from GitHub Actions.
   EOT
   type = string
 }
 
 variable "github_branch" {
-  description = "Branche autorisée à déployer (celle qui déclenche la CD)."
+  description = "Branch allowed to deploy (the one that triggers the CD)."
   type        = string
   default     = "main"
 }
 
 variable "cloudfront_price_class" {
   description = <<-EOT
-    Couverture géographique du CDN CloudFront, impacte le coût :
-      PriceClass_100 = Amérique du Nord + Europe (le moins cher)
-      PriceClass_200 = + Asie, Afrique, Océanie
-      PriceClass_All = couverture mondiale complète (le plus cher)
-    Pour un portfolio perso, PriceClass_100 est largement suffisant.
+    Geographic coverage of the CloudFront CDN, affects cost:
+      PriceClass_100 = North America + Europe (cheapest)
+      PriceClass_200 = + Asia, Africa, Oceania
+      PriceClass_All = full worldwide coverage (most expensive)
+    For a personal portfolio, PriceClass_100 is more than enough.
   EOT
   type    = string
   default = "PriceClass_100"
@@ -60,9 +60,9 @@ variable "cloudfront_price_class" {
 
 variable "custom_domain" {
   description = <<-EOT
-    Optionnel. Ton nom de domaine (ex. "yvansaf.dev") si tu en as un.
-    Laisse vide ("") pour utiliser uniquement le domaine CloudFront par
-    défaut (*.cloudfront.net), fonctionne très bien pour démarrer.
+    Optional. Your domain name (e.g. "yvansaf.dev") if you have one.
+    Leave it empty ("") to use only the default CloudFront domain
+    (*.cloudfront.net), which works fine to get started.
   EOT
   type    = string
   default = ""
