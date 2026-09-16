@@ -1,0 +1,21 @@
+# Terraform state, contains sensitive info, never commit
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Real variable values, contain your data, never the example file
+terraform.tfvars
+*.auto.tfvars
+
+# Plan files
+*.tfplan
+
+# OS / editor noise
+.DS_Store
+
+# Frontend (Vite + React)
+node_modules/
+dist/
+.env
+.env.local
