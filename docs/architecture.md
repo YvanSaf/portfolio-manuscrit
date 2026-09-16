@@ -1,92 +1,55 @@
 # Architecture
 
-## Vue runtime (comment un visiteur charge le site)
+## Runtime view (how a visitor loads the site)
 
-![Vue runtime ou user](./1_Architecture_logical_view.png)
+![Runtime view](./1_Architecture_logical_view.png)
 
-Un visiteur ouvre son navigateur, tape l'URL du site. La requête passe par
-Internet jusqu'à Amazon CloudFront, qui va chercher le fichier demandé
-dans le bucket S3 s'il n'est pas déjà en cache, puis le renvoie en HTTPS
-au navigateur.
+A visitor opens their browser and types the site's URL. The request travels over the internet to Amazon CloudFront, which fetches the requested file from the S3 bucket if it is not already cached, then returns it over HTTPS to the browser.
 
-## Vue déploiement (comment le code arrive sur AWS)
+## Deployment view (how the code reaches AWS)
 
-![Vue déploiement](./2_Architecture_deployment_view.png)
+![Deployment view](./2_Architecture_deployment_view.png)
 
-Le développeur pousse son code sur GitHub. Ça déclenche GitHub Actions,
-qui assume un rôle IAM via OIDC (authentification par jeton signé, sans
-clé AWS stockée en secret), synchronise les fichiers buildés vers S3, puis
-invalide le cache CloudFront pour que les visiteurs voient immédiatement
-la nouvelle version.
+The developer pushes code to GitHub. This triggers GitHub Actions, which assumes an IAM role through OIDC (authentication with a signed token, no AWS key stored as a secret), syncs the built files to S3, then invalidates the CloudFront cache so visitors immediately see the new version.
 
-> Note de correction : le premier jet de ce diagramme utilisait le
-> libellé "IAM Roles Anywhere" sur l'icône du rôle assumé. C'est une
-> erreur de terminologie à corriger dans le fichier source. IAM Roles
-> Anywhere est un service distinct, pensé pour authentifier des charges
-> de travail hors AWS via des certificats X.509. Ce que ce projet utilise
-> réellement est un IAM Role assumé via un fournisseur d'identité OIDC
-> (`aws_iam_openid_connect_provider` + `AssumeRoleWithWebIdentity`). Le
-> libellé correct est simplement "IAM Role".
+> Correction note: the first draft of this diagram used the label "IAM Roles Anywhere" on the assumed role icon. That was a terminology mistake that needs to be fixed in the source file. IAM Roles Anywhere is a separate service, built to authenticate workloads outside AWS using X.509 certificates. What this project actually uses is an IAM Role assumed through an OIDC identity provider (`aws_iam_openid_connect_provider` + `AssumeRoleWithWebIdentity`). The correct label is simply "IAM Role".
 
-Toute l'infrastructure vit dans la région us-east-1, y compris le
-certificat ACM utilisé par CloudFront (une contrainte AWS stricte pour
-CloudFront, pas un choix arbitraire), donc rester sur cette région
-partout simplifie le projet.
+All the infrastructure lives in the us-east-1 region, including the ACM certificate used by CloudFront (a strict AWS requirement for CloudFront, not an arbitrary choice), so staying on this region everywhere keeps the project simple.
 
-## Les services, et pourquoi ils sont là
+## The services, and why they are here
 
-### Amazon S3, stockage du site
+### Amazon S3, site storage
 
-Contient les fichiers buildés (`dist/` après `npm run build`) : HTML, JS,
-CSS, images, polices. Le bucket est entièrement privé, aucun accès public
-direct, même en connaissant l'URL. Seul CloudFront peut y lire, via un
-Origin Access Control (OAC). Détail et justification dans
-[ADR 0001](./decisions/0001-s3-prive-cloudfront-oac.md).
+Holds the built files (`dist/` after `npm run build`): HTML, JS, CSS, images, fonts. The bucket is fully private, no direct public access, even if someone knows the URL. Only CloudFront can read it, through an Origin Access Control (OAC). Details and reasoning in [ADR 0001](./decisions/0001-s3-private-cloudfront-oac.md).
 
-Le versioning est activé, chaque déploiement garde les fichiers
-précédents, ce qui permet un rollback sans avoir à rebuilder quoi que ce
-soit en cas de déploiement cassé.
+Versioning is enabled, so every deployment keeps the previous files, which allows a rollback without having to rebuild anything if a deployment breaks.
 
-### Amazon CloudFront, CDN et HTTPS
+### Amazon CloudFront, CDN and HTTPS
 
-Fait trois choses qu'un bucket S3 seul ne fait pas correctement : HTTPS
-natif, mise en cache géographique, et point d'accès unique autorisé au
-bucket privé.
+Does three things a plain S3 bucket cannot do properly: native HTTPS, geographic caching, and a single authorized access point to the private bucket.
 
-### AWS IAM (rôle et fournisseur OIDC)
+### AWS IAM (role and OIDC provider)
 
-Permet à GitHub Actions de déployer sur AWS sans qu'aucune clé d'accès
-longue durée ne soit stockée dans les secrets du repo. Le rôle n'est
-assumable que depuis ce repo précis, sur la branche `main`. Voir
-[ADR 0002](./decisions/0002-oidc-vs-cles-statiques.md) pour le détail du
-mécanisme et pourquoi c'est préférable aux clés statiques.
+Lets GitHub Actions deploy to AWS without any long lived access key stored in the repo secrets. The role can only be assumed from this specific repo, on the `main` branch. See [ADR 0002](./decisions/0002-oidc-vs-static-keys.md) for the mechanism in detail and why it is preferable to static keys.
 
-### GitHub Actions, CI puis CD
+### GitHub Actions, CI then CD
 
-CI (sur chaque pull request) : lint, vérification TypeScript, build de
-test. Bloque le merge si quelque chose casse.
+CI (on every pull request): lint, TypeScript check, test build. Blocks the merge if something breaks.
 
-CD (sur push vers `main`) : build de production, synchronisation vers S3,
-invalidation du cache CloudFront.
+CD (on push to `main`): production build, sync to S3, CloudFront cache invalidation.
 
-## Ce qui n'est volontairement pas là
+## What is intentionally not here
 
-Pas de base de données, le site est entièrement statique, aucune donnée
-dynamique à stocker côté serveur.
+No database, the site is fully static, no dynamic data to store server side.
 
-Pas de serveur (EC2, Lambda...), rien ne s'exécute côté back, tout le
-rendu (animations, curseur, canvas) se fait dans le navigateur du
-visiteur.
+No server (EC2, Lambda...), nothing runs on the back end, all rendering (animations, cursor, canvas) happens in the visitor's browser.
 
-Pas de nom de domaine custom pour l'instant, le site tourne sur l'URL
-`*.cloudfront.net` par défaut. L'infra est prête à en accueillir un (voir
-la variable `custom_domain` dans `infra/variables.tf`), mais ce n'est pas
-nécessaire pour démarrer.
+No custom domain for now, the site runs on the default `*.cloudfront.net` URL. The infrastructure is ready to support one (see the `custom_domain` variable in `infra/variables.tf`), but it is not needed to get started.
 
-## Liens utiles
+## Useful links
 
-[Décisions d'architecture (ADR)](./decisions/)
+[Architecture decisions (ADR)](./decisions/)
 
-[Estimation des coûts](./costs.md)
+[Cost estimate](./costs.md)
 
-[Ce que j'ai appris en construisant ça](./lessons-learned.md)
+[What I learned building this](./lessons-learned.md)

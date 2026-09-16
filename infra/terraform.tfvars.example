@@ -1,13 +1,13 @@
-# Copie ce fichier en "terraform.tfvars" (jamais commité, voir .gitignore)
-# et remplis tes propres valeurs.
+# Copy this file to "terraform.tfvars" (never committed, see .gitignore)
+# and fill in your own values.
 
 aws_region  = "us-east-1"
-bucket_name = "yvansaf-portfolio-manuscrit" # doit être globalement unique sur AWS
+bucket_name = "yvansaf-portfolio-manuscrit" # must be globally unique across all of AWS
 
-github_repo   = "yvansaf/portfolio-manuscrit" # ton owner/repo exact
+github_repo   = "yvansaf/portfolio-manuscrit" # your exact owner/repo
 github_branch = "main"
 
 cloudfront_price_class = "PriceClass_100"
 
-# Laisse vide si tu n'as pas encore de nom de domaine :
+# Leave empty if you do not have a domain name yet:
 custom_domain = ""

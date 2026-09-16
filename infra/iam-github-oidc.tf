@@ -1,16 +1,16 @@
 # -----------------------------------------------------------------------------
-# iam-github-oidc.tf, permet à GitHub Actions de déployer SANS clé AWS
-# stockée en secret.
+# iam-github-oidc.tf, lets GitHub Actions deploy WITHOUT any AWS key
+# stored as a secret.
 #
-# Principe : GitHub génère un jeton OIDC signé à chaque run de workflow.
-# AWS vérifie ce jeton via le provider OIDC déclaré ici, et n'accorde des
-# accès temporaires (via STS AssumeRole) que si le jeton correspond
-# exactement au repo + à la branche autorisés. Aucune clé d'accès
-# long-lived à faire fuiter, aucune rotation à gérer.
+# Principle: GitHub generates a signed OIDC token on every workflow run.
+# AWS verifies this token through the OIDC provider declared here, and only
+# grants temporary access (through STS AssumeRole) if the token exactly
+# matches the allowed repo and branch. No long lived access key to leak,
+# no rotation to manage.
 # -----------------------------------------------------------------------------
 
-# Récupère dynamiquement l'empreinte (thumbprint) du certificat TLS de
-# GitHub, évite de coder en dur une valeur qui peut changer.
+# Dynamically fetches the thumbprint of GitHub's TLS certificate, avoids
+# hardcoding a value that can change.
 data "tls_certificate" "github_oidc" {
   url = "https://token.actions.githubusercontent.com/.well-known/openid-configuration"
 }
@@ -21,9 +21,9 @@ resource "aws_iam_openid_connect_provider" "github" {
   thumbprint_list = [data.tls_certificate.github_oidc.certificates[0].sha1_fingerprint]
 }
 
-# Rôle que GitHub Actions va assumer. La condition dans la trust policy
-# restreint ceci à TON repo, sur LA branche définie (var.github_branch)
-# uniquement, un fork ou une autre branche ne pourra jamais l'assumer.
+# Role that GitHub Actions will assume. The condition in the trust policy
+# restricts this to YOUR repo, on the branch defined by var.github_branch
+# only, a fork or another branch can never assume it.
 resource "aws_iam_role" "github_actions_deploy" {
   name = "${var.project_name}-github-actions-deploy"
 
@@ -54,9 +54,9 @@ data "aws_iam_policy_document" "github_trust" {
   }
 }
 
-# Permissions accordées une fois le rôle assumé : le strict nécessaire
-# pour déployer, rien de plus. Pas d'accès à d'autres buckets, pas
-# d'accès à d'autres distributions CloudFront, pas de droits IAM.
+# Permissions granted once the role is assumed: strictly what is needed to
+# deploy, nothing more. No access to other buckets, no access to other
+# CloudFront distributions, no IAM permissions.
 resource "aws_iam_role_policy" "github_actions_deploy" {
   name   = "deploy-permissions"
   role   = aws_iam_role.github_actions_deploy.id

@@ -1,23 +1,23 @@
 # -----------------------------------------------------------------------------
-# s3.tf, bucket de stockage du site statique
+# s3.tf, storage bucket for the static site
 #
-# Choix important : ce bucket reste ENTIÈREMENT PRIVÉ. On n'active PAS
-# "S3 static website hosting" (l'ancien endpoint HTTP-only). À la place,
-# CloudFront accède au bucket via son endpoint REST standard, protégé par
-# un Origin Access Control (OAC), voir cloudfront.tf. C'est la méthode
-# recommandée par AWS depuis 2022 (l'ancien OAI est déprécié).
+# Important choice: this bucket stays FULLY PRIVATE. We do NOT enable
+# "S3 static website hosting" (the old HTTP only endpoint). Instead,
+# CloudFront accesses the bucket through its standard REST endpoint, protected
+# by an Origin Access Control (OAC), see cloudfront.tf. This is the method
+# recommended by AWS since 2022 (the older OAI is deprecated).
 #
-# Avantage concret : même si quelqu'un devine l'URL S3 directe, il ne peut
-# rien récupérer. Seul CloudFront (donc HTTPS + cache) peut lire le bucket.
+# Concrete benefit: even if someone guesses the direct S3 URL, they cannot
+# retrieve anything. Only CloudFront (so HTTPS + cache) can read the bucket.
 # -----------------------------------------------------------------------------
 
 resource "aws_s3_bucket" "site" {
   bucket = var.bucket_name
 }
 
-# Versioning : garde l'historique de chaque fichier déployé.
-# En cas de déploiement cassé, on peut restaurer une version précédente
-# d'un objet sans avoir à tout rebuilder, rollback quasi instantané.
+# Versioning: keeps the history of every deployed file.
+# If a deployment breaks, a previous version of an object can be restored
+# without having to rebuild anything, near instant rollback.
 resource "aws_s3_bucket_versioning" "site" {
   bucket = aws_s3_bucket.site.id
   versioning_configuration {
@@ -25,8 +25,8 @@ resource "aws_s3_bucket_versioning" "site" {
   }
 }
 
-# Bloque absolument tout accès public au niveau du bucket, même par erreur
-# de policy future, CloudFront (via OAC) reste le seul chemin d'accès.
+# Blocks absolutely all public access at the bucket level, even from a future
+# policy mistake, CloudFront (through OAC) stays the only access path.
 resource "aws_s3_bucket_public_access_block" "site" {
   bucket = aws_s3_bucket.site.id
 
@@ -36,8 +36,8 @@ resource "aws_s3_bucket_public_access_block" "site" {
   restrict_public_buckets = true
 }
 
-# Désactive les ACL (pratique recommandée AWS actuelle) : la propriété de
-# chaque objet reste toujours celle du bucket, plus simple à raisonner.
+# Disables ACLs (current AWS recommended practice): ownership of every
+# object always stays with the bucket, simpler to reason about.
 resource "aws_s3_bucket_ownership_controls" "site" {
   bucket = aws_s3_bucket.site.id
   rule {
@@ -45,10 +45,9 @@ resource "aws_s3_bucket_ownership_controls" "site" {
   }
 }
 
-# Policy du bucket : autorise UNIQUEMENT le service CloudFront à lire les
-# objets, ET seulement depuis CETTE distribution CloudFront précise
-# (condition sur son ARN), pas n'importe quelle distribution CloudFront
-# du monde entier.
+# Bucket policy: allows ONLY the CloudFront service to read objects, AND
+# only from THIS specific CloudFront distribution (condition on its ARN),
+# not any CloudFront distribution in the world.
 resource "aws_s3_bucket_policy" "site" {
   bucket = aws_s3_bucket.site.id
   policy = data.aws_iam_policy_document.s3_cloudfront_access.json

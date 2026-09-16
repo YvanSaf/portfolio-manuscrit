@@ -1,10 +1,10 @@
 # -----------------------------------------------------------------------------
-# main.tf, configuration du provider et version requise
+# main.tf, provider configuration and required version
 #
-# Le state est en local ("terraform.tfstate") pour démarrer simplement.
-# Pour un vrai usage pro, migre vers un backend distant (S3 + DynamoDB pour
-# le lock) dès que tu bosses à plusieurs ou depuis plusieurs machines , 
-# voir la note en bas de ce fichier.
+# State is kept local ("terraform.tfstate") to keep things simple at first.
+# For real production use, move to a remote backend (S3 + DynamoDB for
+# locking) as soon as you work with more than one person or from more than
+# one machine, see the note at the bottom of this file.
 # -----------------------------------------------------------------------------
 
 terraform {
@@ -21,9 +21,9 @@ terraform {
     }
   }
 
-  # --- Backend distant (à activer plus tard) ---
+  # --- Remote backend (enable later) ---
   # backend "s3" {
-  #   bucket         = "ton-bucket-terraform-state"   # créé à part, hors de ce projet
+  #   bucket         = "your-terraform-state-bucket"   # created separately, outside this project
   #   key            = "portfolio/terraform.tfstate"
   #   region         = "eu-west-3"
   #   dynamodb_table = "terraform-locks"
