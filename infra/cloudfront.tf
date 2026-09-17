@@ -56,7 +56,11 @@ resource "aws_cloudfront_distribution" "site" {
     cloudfront_default_certificate = var.custom_domain == "" ? true : null
     acm_certificate_arn            = var.custom_domain != "" ? aws_acm_certificate.site[0].arn : null
     ssl_support_method             = var.custom_domain != "" ? "sni-only" : null
-    minimum_protocol_version       = "TLSv1.2_2021"
+    # AWS forces TLSv1 as the minimum when using the default CloudFront
+    # certificate (no custom domain), TLSv1.2_2021 only becomes available
+    # once a custom domain with its own ACM certificate is configured.
+    # See docs/lessons-learned.md.
+    minimum_protocol_version = var.custom_domain != "" ? "TLSv1.2_2021" : "TLSv1"
   }
 
   aliases = var.custom_domain != "" ? [var.custom_domain] : []
