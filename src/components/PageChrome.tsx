@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { fr } from "../content/fr";
 import { isSoundOn, setSoundOn, tick } from "../lib/sound";
+import { toHexAscii } from "../lib/text";
+import { useGrainParallax } from "../hooks/useGrainParallax";
 
 export default function PageChrome() {
   const { chrome: t } = fr;
   const [soundOn, setSoundOnState] = useState(isSoundOn());
+
+  useGrainParallax("grain-svg");
 
   function handleToggle() {
     const next = !soundOn;
@@ -19,7 +23,9 @@ export default function PageChrome() {
     <>
       <canvas id="sketch-canvas" className="pointer-events-none fixed inset-0 z-50" />
 
-      <div className="side-margin side-margin-left" id="margin-hex" aria-hidden="true" />
+      <div className="side-margin side-margin-left" aria-hidden="true">
+        {toHexAscii(t.sideMarginRight)}
+      </div>
       <div className="side-margin side-margin-right" aria-hidden="true">
         {t.sideMarginRight}
       </div>
