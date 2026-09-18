@@ -46,6 +46,25 @@ variable "github_branch" {
   default     = "main"
 }
 
+variable "github_owner_id" {
+  description = <<-EOT
+    Numeric, immutable GitHub owner ID. Required since GitHub switched to
+    immutable OIDC subject claims (default for renamed or newly created
+    repos since July 15, 2026). Get it with:
+      curl -s https://api.github.com/users/OWNER | grep -m1 '"id"'
+  EOT
+  type = string
+}
+
+variable "github_repo_id" {
+  description = <<-EOT
+    Numeric, immutable GitHub repository ID. Same reasoning as
+    github_owner_id above. Get it with:
+      curl -s https://api.github.com/repos/OWNER/REPO | grep -m1 '"id"'
+  EOT
+  type = string
+}
+
 variable "cloudfront_price_class" {
   description = <<-EOT
     Geographic coverage of the CloudFront CDN, affects cost:
