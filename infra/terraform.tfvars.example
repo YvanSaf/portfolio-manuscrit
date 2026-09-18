@@ -6,6 +6,10 @@ bucket_name = "yvansaf-portfolio-manuscrit" # must be globally unique across all
 
 github_repo   = "yvansaf/portfolio-manuscrit" # your exact owner/repo
 github_branch = "main"
+# Required since GitHub's OIDC immutable subject claims (see infra/variables.tf
+# for how to obtain these two values):
+github_owner_id = ""
+github_repo_id  = ""
 
 cloudfront_price_class = "PriceClass_100"
 

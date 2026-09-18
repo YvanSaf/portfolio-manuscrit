@@ -30,6 +30,11 @@ resource "aws_iam_role" "github_actions_deploy" {
   assume_role_policy = data.aws_iam_policy_document.github_trust.json
 }
 
+locals {
+  github_owner_name = split("/", var.github_repo)[0]
+  github_repo_name  = split("/", var.github_repo)[1]
+}
+
 data "aws_iam_policy_document" "github_trust" {
   statement {
     effect  = "Allow"
@@ -46,10 +51,15 @@ data "aws_iam_policy_document" "github_trust" {
       values   = ["sts.amazonaws.com"]
     }
 
+    # Immutable subject claim format, required since GitHub switched the
+    # default sub claim to include immutable owner/repo IDs for renamed or
+    # newly created repositories (July 15, 2026 onward). The classic
+    # name-only format ("repo:owner/repo:ref:...") no longer matches for
+    # this repo, since it was renamed after that date. See lessons-learned.md.
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repo}:ref:refs/heads/${var.github_branch}"]
+      values   = ["repo:${local.github_owner_name}@${var.github_owner_id}/${local.github_repo_name}@${var.github_repo_id}:ref:refs/heads/${var.github_branch}"]
     }
   }
 }
