@@ -10,6 +10,7 @@ terraform.tfvars
 
 # Plan files
 *.tfplan
+tfplan
 
 # OS / editor noise
 .DS_Store
