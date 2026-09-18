@@ -244,3 +244,78 @@
     height: 42px;
   }
 }
+
+.egg-bubble {
+  position: fixed;
+  max-width: 320px;
+  background: var(--paper-white);
+  border: 2.5px solid var(--ink);
+  border-radius: 3px;
+  padding: 14px 18px;
+  font-family: "Anime Ace", "Kalam", sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--ink);
+  z-index: 10001;
+  box-shadow: 5px 5px 0 var(--ink);
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.egg-bubble.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.egg-bubble::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 24px;
+  width: 16px;
+  height: 16px;
+  background: var(--paper-white);
+  border-left: 2.5px solid var(--ink);
+  border-top: 2.5px solid var(--ink);
+  transform: rotate(45deg);
+}
+
+.egg-bubble .close {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.egg-bubble .egg-quote {
+  margin: 4px 14px 2px 0;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--red);
+}
+
+.egg-bubble .egg-author {
+  font-style: normal;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.egg-bubble .egg-note {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink);
+}

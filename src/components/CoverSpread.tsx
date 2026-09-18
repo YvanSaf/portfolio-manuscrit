@@ -48,7 +48,7 @@ export default function CoverSpread() {
         </div>
       </div>
 
-      <TomoeEgg className="egg egg-on-cover " />
+      <TomoeEgg id="cover" className="egg egg-on-cover" />
     </section>
   );
 }
