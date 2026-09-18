@@ -12,6 +12,7 @@ export default {
         "ink-soft": "#46403A",
         guide: "#B8AE99",
         red: "#C23B22",
+        "red-soft": "#c23b2233",
       },
       fontFamily: {
         "anime-ace": ["Anime Ace", "Kalam", "sans-serif"],
