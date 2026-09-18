@@ -37,6 +37,10 @@
   opacity: 0;
 }
 
+.cover-inner {
+  position: relative;
+}
+
 .cover-shade {
   position: absolute;
   inset: 0;
@@ -194,5 +198,49 @@
 @media (max-width: 640px) {
   .side-margin {
     display: none;
+  }
+}
+
+/* -----------------------------------------------------------------------
+   Sound toggle button, fixed bottom-right
+   ----------------------------------------------------------------------- */
+
+.sound-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--paper-white);
+  border: 2.5px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+  padding: 0;
+  transition: transform 0.15s ease;
+}
+
+.sound-toggle:hover {
+  transform: scale(1.06);
+}
+
+.sound-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.sound-toggle[aria-pressed="true"] {
+  background: var(--kraft-light);
+}
+
+@media (max-width: 700px) {
+  .sound-toggle {
+    bottom: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
   }
 }
