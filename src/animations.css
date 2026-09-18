@@ -1,0 +1,198 @@
+/* -----------------------------------------------------------------------
+   Cover page-turn effect (cover-spread section)
+   These properties are tied to the scroll-driven turn animation wired in
+   step 3 (GSAP), not generic layout, hence plain CSS rather than Tailwind.
+   ----------------------------------------------------------------------- */
+
+.cover-perspective {
+  height: 100vh;
+  width: 100%;
+  perspective: 2200px;
+  overflow: hidden;
+}
+
+.cover-front,
+.cover-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--kraft);
+}
+
+.cover-front {
+  z-index: 2;
+  transform-origin: left center;
+  backface-visibility: hidden;
+  border-right: 3px solid var(--ink);
+  box-shadow: 10px 0 36px rgba(0, 0, 0, 0.18);
+}
+
+.cover-back {
+  z-index: 1;
+}
+
+.cover-back .cover-inner {
+  opacity: 0;
+}
+
+.cover-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 55%, rgba(0, 0, 0, 0.4) 100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cover-crease {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -8%;
+  width: 90px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.32) 45%,
+    rgba(255, 255, 255, 0.25) 52%,
+    rgba(0, 0, 0, 0.32) 58%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(1px);
+}
+
+/* -----------------------------------------------------------------------
+   Scroll hint, letter by letter wave
+   The text is split into one <span class="letter"> per character in
+   step 3 (JS). This animation stays inert until that split exists.
+   ----------------------------------------------------------------------- */
+
+.cover-hint .letter {
+  display: inline-block;
+  animation: hint-wave 1.8s ease-in-out infinite;
+}
+
+@keyframes hint-wave {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* -----------------------------------------------------------------------
+   Easter eggs, rotating tomoe icon
+   ----------------------------------------------------------------------- */
+
+.egg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  vertical-align: middle;
+  cursor: pointer;
+  opacity: 0.85;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.egg:hover {
+  opacity: 1;
+  transform: scale(1.12);
+}
+
+.egg .tomoe-ring {
+  width: 100%;
+  height: 100%;
+  animation: tomoe-spin 6s linear infinite;
+  transform-origin: center;
+}
+
+.egg-on-cover {
+  position: absolute !important;
+  z-index: 30;
+  /* Temporary fallback position, prevents the element from overflowing
+     the viewport before step 3 replaces this with JS-calculated
+     coordinates that follow the hint text. */
+  top: auto;
+  bottom: 40px;
+  right: 40px;
+}
+
+.egg.found .tomoe-ring {
+  animation-duration: 22s;
+  opacity: 0.6;
+}
+
+@keyframes tomoe-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tomoe-outline {
+  fill: var(--paper-white);
+  stroke: var(--ink);
+  stroke-width: 4px;
+}
+
+.tomoe-comma {
+  fill: var(--red);
+  stroke: var(--ink);
+  stroke-width: 2px;
+}
+
+.tomoe-pupil {
+  fill: var(--ink);
+}
+
+/* -----------------------------------------------------------------------
+   Side margins, decorative vertical text fixed to the viewport edges
+   ----------------------------------------------------------------------- */
+
+.side-margin {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  letter-spacing: 4px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  opacity: 0.38;
+  pointer-events: none;
+  z-index: 500;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.side-margin-left {
+  left: 10px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.side-margin-right {
+  right: 10px;
+  font-family: "Anime Ace", "Kalam", sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .side-margin {
+    display: none;
+  }
+}

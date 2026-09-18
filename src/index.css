@@ -1,3 +1,14 @@
+:root {
+  --kraft: #e7e0ce;
+  --kraft-light: #f2ecdc;
+  --paper-white: #fbf8f0;
+  --ink: #1c1916;
+  --ink-soft: #46403a;
+  --guide: #b8ae99;
+  --red: #c23b22;
+  --red-soft: #c23b2233;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
