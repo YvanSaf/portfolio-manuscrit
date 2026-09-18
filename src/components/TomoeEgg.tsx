@@ -1,14 +1,22 @@
+import type { MouseEvent } from "react";
+import type { EggId } from "../content/eggs";
+import { useEggBubble } from "../hooks/useEggBubble";
+
 type TomoeEggProps = {
+  id: EggId;
   className?: string;
 };
 
-export default function TomoeEgg({ className }: TomoeEggProps) {
+export default function TomoeEgg({ id, className }: TomoeEggProps) {
+  const { showBubble } = useEggBubble();
+
+  function handleClick(e: MouseEvent<HTMLSpanElement>) {
+    e.stopPropagation();
+    showBubble(id, e.currentTarget);
+  }
+
   return (
-    <span
-      className={className}
-      data-cursor="link"
-      aria-label="note cachée"
-    >
+    <span className={className} data-cursor="link" aria-label="note cachée" onClick={handleClick}>
       <svg className="tomoe-ring" viewBox="0 0 100 100" aria-hidden="true">
         <circle className="tomoe-outline" cx="50" cy="50" r="46" />
         <circle cx="50" cy="50" r="27" fill="none" stroke="var(--ink)" strokeWidth="1.5" opacity=".45" />
