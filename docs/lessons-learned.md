@@ -61,3 +61,38 @@ Takeaway: always run `git status` right after installing a new tool or
 running a new script for the first time, before running `git add`.
 Generated files have a way of landing exactly where source files live if
 the output path isn't explicit.
+
+## Migrating a 700-line stylesheet in small pieces hides global rules
+
+Porting a single large CSS file section by section (as planned, alongside
+the matching JSX for each site section) works well for most rules, but
+it has one systematic blind spot: **base styles that apply to the whole
+page** (on `body`, `:root`, `*`) are easy to miss entirely, because they
+are not tied to any single section's markup, so no obvious moment
+"forces" you to go looking for them.
+
+Two real examples from this project:
+
+- The original `body` rule set a default background (a kraft color plus
+  a very subtle grid texture) and a default `font-family` for all text.
+  Both were skipped entirely during the first CSS migration pass, since
+  neither is visible on an empty page and neither is tied to a specific
+  component. The result: the cover section looked correct (it sets its
+  own background and font explicitly), but the next section rendered
+  with the browser's default white background and default font, a
+  regression that stayed invisible until a second section actually
+  existed to reveal it by contrast.
+- `#grain-svg` had a dedicated CSS rule (`opacity: .05`,
+  `mix-blend-mode: multiply`, a specific `z-index`) that lived far from
+  the inline SVG markup itself, in a completely different part of the
+  stylesheet. Without it, the grain effect renders at near full
+  intensity instead of a barely-there paper texture, since only the
+  noise filter's internal alpha value was ported, not the element's own
+  opacity.
+
+Takeaway: when migrating a stylesheet in pieces, do one extra pass
+specifically for selectors that are not scoped to any section (`body`,
+`:root`, `*`, and any `id` selector used by a page-wide element like
+`#grain-svg` or `#sketch-canvas`), before starting the next section.
+Waiting for a second section to exist as a point of comparison is a slow
+and confusing way to catch this category of bug.
