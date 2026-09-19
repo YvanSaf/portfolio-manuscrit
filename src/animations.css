@@ -489,3 +489,46 @@
   opacity: 0;
   transform: translateY(36px);
 }
+
+.tool-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.tool-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--guide);
+}
+
+.tool-row .label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.bar-track {
+  height: 10px;
+  background: var(--kraft-light);
+  border: 1.5px solid var(--ink);
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--ink);
+}
+
+.bar-track .crack {
+  position: absolute;
+  top: -3px;
+  height: 16px;
+  width: 2px;
+  background: var(--red);
+}
