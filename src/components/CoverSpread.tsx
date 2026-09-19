@@ -1,12 +1,15 @@
 import { useEffect, useRef } from "react";
 import { fr } from "../content/fr";
 import TomoeEgg from "./TomoeEgg";
+import { useCoverTurn } from "../hooks/useCoverTurn";
 
 export default function CoverSpread() {
   const { coverSpread: t } = fr;
   const sectionRef = useRef<HTMLElement>(null);
   const hintRef = useRef<HTMLSpanElement>(null);
   const eggRef = useRef<HTMLSpanElement>(null);
+
+useCoverTurn("#cover-spread");
 
   useEffect(() => {
     const hint = hintRef.current;
