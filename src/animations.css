@@ -484,3 +484,8 @@
     grid-row: span 2;
   }
 }
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(36px);
+}
