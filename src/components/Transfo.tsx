@@ -1,8 +1,10 @@
 import { fr } from "../content/fr";
 import TomoeEgg from "./TomoeEgg";
+import { useCharFrames } from "../hooks/useCharFrames";
 
 export default function Transfo() {
   const { transfo: t } = fr;
+  useCharFrames("char-canvas", "char-stage");
 
   return (
     <section className="transfo relative h-[380vh] border-t border-dashed border-guide">
