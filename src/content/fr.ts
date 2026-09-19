@@ -72,4 +72,55 @@ outils: {
     { label: "Bash & automatisation", percent: 75 },
   ],
 },
+certifs: {
+  title: "Tampons de certification",
+  subtitle: "preuves encrées",
+  pendingLabel: "en cours",
+  items: [
+    {
+      name: "AWS re/Start",
+      rotation: -5,
+      pending: false,
+      url: "https://www.credly.com/badges/4c2c9b26-6a69-4f15-9d51-b761ca5f4037/public_url",
+    },
+    {
+      name: "AWS Cloud Practitioner",
+      rotation: 4,
+      pending: false,
+      url: "https://www.credly.com/badges/1cec39e6-a25c-4f41-9b0e-01249df5d9a2/public_url",
+    },
+    {
+      name: "AWS Solutions Architect Associate",
+      rotation: -3,
+      pending: false,
+      url: "https://www.credly.com/badges/30410551-7099-46b4-842e-0422a7be0abf/public_url",
+    },
+    {
+      name: "Fortinet NSE 1",
+      rotation: 6,
+      pending: false,
+      url: "https://www.credly.com/badges/35c58be2-e5e1-46f9-924b-c2b4b01c7ba0/public_url",
+    },
+    {
+      name: "Fortinet NSE 2",
+      rotation: -6,
+      pending: false,
+      url: "https://www.credly.com/badges/524361c3-8aaa-47eb-af66-c86ac88ca3c5/public_url",
+    },
+    {
+      name: "Oracle OCI Foundations Associate",
+      rotation: 3,
+      pending: false,
+      url: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=D9FD8748864A2EC86F12BC4C8129477FE3D7A88E8CF4E4B7F627044E08645EBD",
+    },
+    {
+      name: "Docker & Kubernetes",
+      rotation: -5,
+      pending: false,
+      url: "https://www.datacamp.com/completed/statement-of-accomplishment/track/072dd8629ec49d20586ab4586270c6c85fa37392",
+    },
+    { name: "Terraform Associate 004", rotation: 4, pending: true, url: null },
+    { name: "AWS Security Speciality", rotation: -3, pending: true, url: null },
+  ],
+},
 } as const;

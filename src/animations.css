@@ -532,3 +532,79 @@
   width: 2px;
   background: var(--red);
 }
+
+.stamp-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 26px;
+}
+
+.cert-stamp {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  border: 3px solid var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  position: relative;
+  color: var(--red);
+  font-family: "Anime Ace", "Kalam", sans-serif;
+  font-size: 12px;
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transform: rotate(var(--r, -4deg));
+  transition: transform 0.2s ease;
+  text-decoration: none;
+  color: var(--red);
+}
+
+.cert-stamp::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--red);
+  border-radius: 50%;
+  opacity: 0.55;
+}
+
+.cert-stamp:hover {
+  transform: rotate(var(--r, -4deg)) scale(1.05);
+}
+
+.cert-stamp.pending {
+  border-style: dashed;
+  border-color: var(--ink-soft);
+  color: var(--ink-soft);
+  opacity: 0.75;
+}
+
+.cert-stamp.pending::before {
+  border-style: dashed;
+  border-color: var(--ink-soft);
+}
+
+.cert-pending-tag {
+  position: absolute;
+  bottom: -8px;
+  right: -14px;
+  background: var(--red);
+  color: var(--paper-white);
+  font-size: 9.5px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  transform: rotate(-8deg);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+@media (max-width: 700px) {
+  .stamp-grid {
+    justify-content: center;
+  }
+}
