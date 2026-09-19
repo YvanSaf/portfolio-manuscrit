@@ -15,4 +15,8 @@ export const fr = {
     soundToggleLabel: "Activer le son (désactivé par défaut)",
     sideMarginRight: "Yvan SAF",
   },
+  transfo: {
+  label: "PLANCHE 02, LE PERSONNAGE PREND VIE",
+  caption: "scrolle pour voir le perso prendre vie, trait par trait",
+},
 } as const;
