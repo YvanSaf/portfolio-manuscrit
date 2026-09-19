@@ -1,14 +1,31 @@
-:root {
-  --kraft: #e7e0ce;
-  --kraft-light: #f2ecdc;
-  --paper-white: #fbf8f0;
-  --ink: #1c1916;
-  --ink-soft: #46403a;
-  --guide: #b8ae99;
-  --red: #c23b22;
-  --red-soft: #c23b2233;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --kraft: #e7e0ce;
+    --kraft-light: #f2ecdc;
+    --paper-white: #fbf8f0;
+    --ink: #1c1916;
+    --ink-soft: #46403a;
+    --guide: #b8ae99;
+    --red: #c23b22;
+    --red-soft: #c23b2233;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--kraft);
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 0, 0, 0.025) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0, 0, 0, 0.015) 40px);
+    color: var(--ink);
+    font-family: "Anime Ace", "Kalam", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+}

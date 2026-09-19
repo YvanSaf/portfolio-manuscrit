@@ -315,3 +315,35 @@
   line-height: 1.4;
   color: var(--ink);
 }
+
+.transfo-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--guide) 1px, transparent 1px),
+    linear-gradient(90deg, var(--guide) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.35;
+}
+
+.egg-on-transfo {
+  position: absolute !important;
+  top: 38px;
+  right: 28px;
+  z-index: 5;
+}
+
+#char-stage.loading::after {
+  content: "chargement des planches…";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: var(--kraft);
+}

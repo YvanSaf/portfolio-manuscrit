@@ -1,17 +1,12 @@
 import { useEffect, useRef } from "react";
 
-const FRAME_COUNT = 121;
+export const FRAME_COUNT = 121;
 const FRAME_PATH = (i: number) => `/images/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
 
-/**
- * Preloads the 121 character frames and draws the first one as soon as
- * it's ready, while the rest keep loading in the background. Returns a
- * drawFrame function so a scroll-driven hook (step 3) can pick a
- * specific frame index later.
- */
 export function useCharFrames(canvasId: string, stageId: string) {
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const firstDrawnRef = useRef(false);
+  const frameIndexRef = useRef(0);
   const drawFrameRef = useRef<(index: number) => void>(() => {});
 
   useEffect(() => {
@@ -23,6 +18,7 @@ export function useCharFrames(canvasId: string, stageId: string) {
     stage.classList.add("loading");
 
     function drawFrame(index: number) {
+      frameIndexRef.current = index;
       const img = imagesRef.current[index];
       if (!img || !img.complete || img.naturalWidth === 0) return;
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
@@ -49,7 +45,7 @@ export function useCharFrames(canvasId: string, stageId: string) {
     imagesRef.current = images;
 
     function handleResize() {
-      drawFrame(0);
+      drawFrame(frameIndexRef.current);
     }
     window.addEventListener("resize", handleResize);
 

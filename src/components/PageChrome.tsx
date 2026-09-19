@@ -30,7 +30,11 @@ export default function PageChrome() {
         {t.sideMarginRight}
       </div>
 
-      <svg id="grain-svg" className="pointer-events-none fixed inset-0 -z-10 h-full w-full" aria-hidden="true">
+      <svg
+        id="grain-svg"
+        className="pointer-events-none fixed -inset-[20px] z-[9997] h-[calc(100%+40px)] w-[calc(100%+40px)] opacity-5 mix-blend-multiply"
+        aria-hidden="true"
+      >
         <filter id="grain-filter">
           <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves={2} stitchTiles="stitch" result="noise" />
           <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0" />
