@@ -26,7 +26,7 @@ export function useCharScrollAnimation(
         const idx = Math.min(FRAME_COUNT - 1, Math.round(self.progress * (FRAME_COUNT - 1)));
         if (idx !== currentFrameRef.current) {
           currentFrameRef.current = idx;
-          drawFrameRef.current(idx);
+          drawFrameRef.current?.(idx);
         }
       },
     });
