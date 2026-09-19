@@ -5,6 +5,7 @@ import Transfo from "./components/Transfo";
 import Planches from "./components/Planches";
 import { useScrollReveal } from "./hooks/useScrollReveal";
 import { usePanelClickSound } from "./hooks/usePanelClickSound";
+import Outils from "./components/Outils";
 
 export default function App() {
   useScrollReveal();
@@ -16,6 +17,7 @@ export default function App() {
         <CoverSpread />
         <Transfo />
         <Planches />
+        <Outils />
       </main>
     </EggBubbleProvider>
   );

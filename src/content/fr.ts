@@ -61,4 +61,15 @@ planches: {
     url: "https://github.com/YvanSaf",
   },
 },
+outils: {
+  title: "Trousse à outils",
+  subtitle: "encres utilisées",
+  tools: [
+    { label: "Cloud (AWS)", percent: 82 },
+    { label: "Python / Django", percent: 80 },
+    { label: "JavaScript / React", percent: 72 },
+    { label: "Docker / Kubernetes", percent: 70 },
+    { label: "Bash & automatisation", percent: 75 },
+  ],
+},
 } as const;
