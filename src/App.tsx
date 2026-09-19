@@ -2,6 +2,7 @@ import PageChrome from "./components/PageChrome";
 import CoverSpread from "./components/CoverSpread";
 import { EggBubbleProvider } from "./context/EggBubbleProvider";
 import Transfo from "./components/Transfo";
+import Planches from "./components/Planches";
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
       <main>
         <CoverSpread />
         <Transfo />
+        <Planches />
       </main>
     </EggBubbleProvider>
   );
