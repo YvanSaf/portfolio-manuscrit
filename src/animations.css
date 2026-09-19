@@ -126,12 +126,8 @@
 .egg-on-cover {
   position: absolute !important;
   z-index: 30;
-  /* Temporary fallback position, prevents the element from overflowing
-     the viewport before step 3 replaces this with JS-calculated
-     coordinates that follow the hint text. */
-  top: auto;
-  bottom: 40px;
-  right: 40px;
+  /* Exact position is synced with the hint text via a useEffect in
+     CoverSpread.tsx, see the syncPosition function there. */
 }
 
 .egg.found .tomoe-ring {
