@@ -347,3 +347,140 @@
   color: var(--ink-soft);
   background: var(--kraft);
 }
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  gap: 16px;
+}
+
+.section-head > h2 {
+  margin-right: auto;
+  font-family: "Anime Ace", sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  text-transform: uppercase;
+}
+
+.section-head span {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--ink-soft);
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 165px;
+  gap: 14px;
+}
+
+.panel {
+  background: var(--paper-white);
+  border: 2.5px solid var(--ink);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: transform 0.15s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.panel:hover {
+  transform: translate(-2px, -2px);
+}
+
+.panel:hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: 6px 6px 0 var(--ink);
+  pointer-events: none;
+}
+
+.panel .tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.panel h3 {
+  font-family: "Anime Ace", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.panel p {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.p1 {
+  grid-column: span 4;
+  grid-row: span 2;
+}
+.p2 {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: var(--ink);
+  color: var(--paper-white);
+}
+.p2 .tag,
+.p2 p {
+  color: #c9c2ae;
+}
+.p3 {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+.p4 {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+.p5 {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.p6 {
+  grid-column: span 4;
+  grid-row: span 1;
+}
+
+.annot {
+  position: absolute;
+  font-family: "Anime Ace", "Kalam", cursive;
+  color: var(--red);
+  font-size: 13px;
+  transform: rotate(-3deg);
+  pointer-events: none;
+}
+.a1 {
+  bottom: -8px;
+  right: 14px;
+}
+
+@media (max-width: 760px) {
+  .panel-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .p1,
+  .p2,
+  .p3,
+  .p4,
+  .p5,
+  .p6 {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
