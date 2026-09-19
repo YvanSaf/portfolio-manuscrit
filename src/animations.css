@@ -389,10 +389,11 @@
   transition: transform 0.15s ease;
   text-decoration: none;
   color: inherit;
+  
 }
 
 .panel:hover {
-  transform: translate(-2px, -2px);
+  transform: translate(-2px, -2px) scale(1.015) !important;
 }
 
 .panel:hover::after {
@@ -573,7 +574,7 @@
 }
 
 .cert-stamp:hover {
-  transform: rotate(var(--r, -4deg)) scale(1.05);
+  transform: rotate(var(--r, -4deg)) scale(1.1) !important;
 }
 
 .cert-stamp.pending {
