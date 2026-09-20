@@ -362,6 +362,7 @@
   font-weight: 700;
   font-size: 26px;
   text-transform: uppercase;
+  min-width: 0;
 }
 
 .section-head span {
@@ -607,5 +608,112 @@
 @media (max-width: 700px) {
   .stamp-grid {
     justify-content: center;
+  }
+}
+
+footer {
+  padding: 60px 0 50px;
+  border-top: 3px solid var(--ink);
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+footer h2 {
+  font-family: "Anime Ace", sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.stamp {
+  width: 86px;
+  height: 86px;
+  border: 3px solid var(--red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--red);
+  font-family: "Anime Ace", "Kalam", cursive;
+  font-size: 11px;
+  line-height: 1.25;
+  text-align: center;
+  transform: rotate(-8deg);
+  justify-self: end;
+  padding: 6px;
+  overflow-wrap: break-word;
+}
+
+.links {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 24px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.contact-stamp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.contact-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-white);
+  border: 2px solid var(--ink);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.contact-icon img,
+.contact-icon svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-icon.icon-missing {
+  font-family: "Anime Ace", "Kalam", sans-serif;
+  font-size: 18px;
+  color: var(--ink-soft);
+}
+
+.contact-icon.icon-missing img {
+  display: none;
+}
+
+.contact-stamp:hover .contact-icon {
+  transform: rotate(-6deg) scale(1.08);
+  border-color: var(--red);
+}
+
+.contact-label {
+  font-family: "Anime Ace", "Kalam", sans-serif;
+  font-size: 14px;
+  text-transform: lowercase;
+  border-bottom: 1.5px solid var(--red);
+  line-height: 1.1;
+}
+
+@media (max-width: 700px) {
+  footer {
+    grid-template-columns: 1fr;
+  }
+  .stamp {
+    justify-self: start;
   }
 }

@@ -123,4 +123,16 @@ certifs: {
     { name: "AWS Security Speciality", rotation: -3, pending: true, url: null },
   ],
 },
+footer: {
+  titleLines: ["Parlons d'un", "prochain chapitre"],
+  stampLines: ["validé", "pour", "publication"],
+  links: [
+    { label: "mail", href: "mailto:yvansaf694@gmail.com", icon: "mail" },
+    { label: "linkedin", href: "https://www.linkedin.com/in/yvan-saf-95787b318/", icon: "linkedin" },
+    { label: "medium", href: "https://medium.com/@yvansaf694", icon: "medium" },
+    { label: "github", href: "https://github.com/YvanSaf", icon: "github" },
+    { label: "dev.to", href: "https://dev.to/yvan_saf_ffc94f53623480b1", icon: "devto" },
+    { label: "aws builder", href: "https://builder.aws.com/community/@yvansaf", icon: "aws-builder-center" },
+  ],
+},
 } as const;
