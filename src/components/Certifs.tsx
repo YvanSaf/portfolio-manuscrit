@@ -6,7 +6,7 @@ export default function Certifs() {
   const { certifs: t } = fr;
 
   return (
-    <section className="certifs mx-auto max-w-[1100px] px-7 py-24">
+    <section className="certifs mx-auto max-w-[1100px] border-t border-dashed border-guide px-7 py-24">
       <div className="section-head">
         <h2>{t.title}</h2>
         <span>{t.subtitle}</span>
