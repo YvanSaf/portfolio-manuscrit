@@ -1,11 +1,7 @@
 import { fr } from "../content/fr";
 import TomoeEgg from "./TomoeEgg";
-import { IconGithub, IconDevto } from "./ContactIcons";
 
 function ContactIcon({ icon, label }: { icon: string; label: string }) {
-  if (icon === "github") return <IconGithub />;
-  if (icon === "devto") return <IconDevto />;
-
   return (
     <img
       src={`/icons/icon-${icon}.png`}
@@ -34,29 +30,18 @@ export default function Footer() {
           {t.titleLines[1]}
         </h2>
         <div className="links">
-          {t.links.map((l) => {
-            const external = l.href.startsWith("http");
-            return (
-              <a key={l.label} href={l.href} data-cursor="stamp" className="magnetic contact-stamp" target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}>
-                <span className="contact-icon">
-                  <ContactIcon icon={l.icon} label={l.label} />
-                </span>
-                <span className="contact-label">{l.label}</span>
-              </a>
-            );
-          })}
+          {t.links.map((l) => (
+            <a key={l.label} href={l.href} data-cursor="stamp" className="magnetic contact-stamp" target={l.href.startsWith("http") ? "_blank" : undefined} rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}>
+              <span className="contact-icon">
+                <ContactIcon icon={l.icon} label={l.label} />
+              </span>
+              <span className="contact-label">{l.label}</span>
+            </a>
+          ))}
         </div>
       </div>
 
-      <div className="stamp">
-        {t.stampLines[0]}
-        <br />
-        {t.stampLines[1]}
-        <br />
-        {t.stampLines[2]}
-      </div>
-
-      <TomoeEgg id="footer" className="egg" />
+      <TomoeEgg id="footer" className="egg footer-egg" />
     </footer>
   );
 }
