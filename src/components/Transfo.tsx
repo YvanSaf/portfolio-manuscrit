@@ -27,7 +27,7 @@ export default function Transfo() {
           <canvas id="char-canvas" className="block h-full w-full" width={828} height={1108} />
         </div>
 
-        <div className="absolute bottom-[24px] left-1/2 w-[80%] max-w-[480px] -translate-x-1/2 text-center font-anime-ace text-lg text-red">
+        <div className="absolute bottom-[8px] left-1/2 w-[80%] max-w-[480px] -translate-x-1/2 text-center font-anime-ace text-lg text-red">
           {t.caption}
         </div>
       </div>
