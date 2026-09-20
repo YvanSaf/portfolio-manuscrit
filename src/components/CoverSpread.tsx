@@ -9,7 +9,7 @@ export default function CoverSpread() {
   const hintRef = useRef<HTMLSpanElement>(null);
   const eggRef = useRef<HTMLSpanElement>(null);
 
-useCoverTurn("#cover-spread");
+  useCoverTurn("#cover-spread");
 
   useEffect(() => {
     const hint = hintRef.current;
@@ -27,8 +27,6 @@ useCoverTurn("#cover-spread");
     syncPosition();
     window.addEventListener("resize", syncPosition);
     window.addEventListener("load", syncPosition);
-    // Small delay to catch the moment the custom font finishes loading,
-    // which can shift the hint text width after the first measurement.
     const timeout = setTimeout(syncPosition, 400);
 
     return () => {
@@ -48,15 +46,13 @@ useCoverTurn("#cover-spread");
               {t.plateLabel}
             </div>
 
-            <h1 className="font-anime-ace font-bold uppercase leading-[0.95] tracking-[-1px] text-[clamp(2.5rem,7vw,4.75rem)] text-ink">
+            <h1 className="font-anime-ace font-bold uppercase leading-[0.95] tracking-[-1px] text-[clamp(1.85rem,4.8vw,3.4rem)] text-ink">
               {t.titleBefore} <em className="not-italic text-red">{t.titleEm}</em>
               <br />
               {t.titleAfter}
             </h1>
 
-            <span className="mt-3 inline-block font-anime-ace text-[22px] text-ink-soft">
-              {t.role}
-            </span>
+            <span className="mt-3 inline-block font-anime-ace text-[22px] text-ink-soft">{t.role}</span>
 
             <span
               ref={hintRef}
@@ -79,9 +75,9 @@ useCoverTurn("#cover-spread");
             <div className="note relative font-anime-ace text-red before:absolute before:left-[-18px] before:top-1 before:h-[10px] before:w-[10px] before:rotate-45 before:border-b-2 before:border-l-2 before:border-red before:content-['']">
               {t.noteLine1}
               <br />
-              <span className="strike line-through opacity-55">{t.noteStrike}</span>
-              <br />
               {t.noteLine2}
+              <br />
+              {t.noteLine3}
             </div>
           </div>
         </div>

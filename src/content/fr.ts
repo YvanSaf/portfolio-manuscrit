@@ -1,15 +1,15 @@
 export const fr = {
   coverSpread: {
     plateLabel: "PLANCHE 01, COUVERTURE",
-    titleBefore: "L'encre",
-    titleEm: "s'itère",
-    titleAfter: "comme du code",
-    role: "Génie logiciel de formation, ingénieur cloud dans l'âme.",
+    titleBefore: "J'apprends en construisant, quitte à",
+    titleEm: "me tromper",
+    titleAfter: "pour mieux recommencer.",
+    role: "Software Engineer de formation, aujourd'hui orienté cloud, DevOps et sécurité.",
     hint: "scrolle pour tourner la page",
-    bio: "Je viens du génie logiciel, mais c'est le cloud qui m'anime aujourd'hui. J'y construis ma carrière, une certification à la fois. Je reste convaincu qu'il vaut mieux avancer avec une base imparfaite que rester figé à attendre d'être « prêt ». Ce portfolio est mon MVP, publié tel quel, pour être itéré, pas peaufiné dans l'ombre jusqu'à un jour qui n'arrive jamais.",
-    noteLine1: "premier jet trop sage,",
-    noteStrike: "à refaire en plus carré",
-    noteLine2: "→ fait.",
+    bio: "Je viens du génie logiciel. J'ai commencé par apprendre à construire des applications, puis j'ai voulu comprendre ce qui se passe derrière elles : comment elles sont déployées, comment elles communiquent, comment elles évoluent, et surtout comment les rendre plus sûres. C'est ce qui m'a mené vers le cloud, l'automatisation et la sécurité. Je n'ai pas suivi une ligne parfaitement droite pour y arriver. J'apprends en construisant, en testant, en me trompant, puis en recommençant. Certains projets fonctionnent du premier coup, d'autres m'obligent à passer des heures à comprendre pourquoi quelque chose casse, et c'est justement cette partie qui m'intéresse le plus. Ce portfolio rassemble ces expérimentations : projets terminés, labs, architectures, certifications, et tout ce que je suis encore en train d'apprendre. Pas un parcours terminé. Une construction en cours.",
+    noteLine1: "première version.",
+    noteLine2: "ça fonctionne.",
+    noteLine3: "mais je sais déjà ce que je veux améliorer.",
   },
   chrome: {
     soundToggleLabel: "Activer le son (désactivé par défaut)",
