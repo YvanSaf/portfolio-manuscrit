@@ -17,7 +17,7 @@ export const eggs: EggEntry[] = [
 
   {
     id: "transfo",
-    quote: "Au-delà de mes limites, plus ultra !",
+    quote: "Au-delà des limites, et plus ultra !",
     author: "All Might, My Hero Academia",
     note: "J'aime bien cette idée de toujours essayer d'aller un peu plus loin. Je ne réussis pas tout du premier coup, loin de là. Je teste, je me trompe, je recommence et, petit à petit, ça finit par marcher.",
   },
@@ -40,7 +40,7 @@ export const eggs: EggEntry[] = [
     id: "certifs",
     quote: null,
     author: null,
-    note: "Pour moi, une certification représente surtout une étape. Elle ne veut pas dire que je maîtrise un sujet de A à Z. La AWS SAA que je prépare encore en est un bon exemple. Je suis encore en train d'apprendre, et c'est justement le but.",
+    note: "Pour moi, une certification représente surtout une étape. Elle ne veut pas dire que je maîtrise un sujet de A à Z. La Terraform Associate 004 que je prépare encore en est un bon exemple. Je suis encore en train d'apprendre, et c'est justement le but.",
   },
 
   {
