@@ -7,6 +7,7 @@ import { useScrollReveal } from "./hooks/useScrollReveal";
 import { usePanelClickSound } from "./hooks/usePanelClickSound";
 import Outils from "./components/Outils";
 import Certifs from "./components/Certifs";
+import Footer from "./components/Footer";
 
 export default function App() {
   useScrollReveal();
@@ -20,6 +21,7 @@ export default function App() {
         <Planches />
         <Outils />
         <Certifs />
+        <Footer />
       </main>
     </EggBubbleProvider>
   );
