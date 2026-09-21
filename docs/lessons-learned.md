@@ -96,3 +96,13 @@ specifically for selectors that are not scoped to any section (`body`,
 `#grain-svg` or `#sketch-canvas`), before starting the next section.
 Waiting for a second section to exist as a point of comparison is a slow
 and confusing way to catch this category of bug.
+
+## A merged branch is not a paused branch
+
+Several times during this project, a small follow-up change got pushed to a branch whose pull request had already been merged. Each time, the same thing happened: GitHub's "Automatically delete head branches" setting had already removed that branch on the remote, but the local branch was still sitting there, untouched. Committing to it and pushing silently *recreated* the branch on GitHub, with no pull request attached to it, since the old one was already closed.
+
+The practical consequence: the new commit existed on GitHub, but nowhere near `main`. No CI ran either, since the `pull_request` trigger has nothing to attach to without an open pull request. It looked like everything had worked (the push succeeded, no error anywhere), which made it an easy mistake to repeat, since nothing signals failure at the time it happens. Confirming with `git fetch` followed by `git log --oneline origin/main` was the only reliable way to notice the change had not actually reached `main`.
+
+The fix, each time, was the same: open a new pull request from the recreated branch (GitHub's "Compare & pull request" banner, or manually if it had already disappeared), let CI run on it, and merge it properly.
+
+Takeaway: a merged pull request kills its branch, not pauses it. The rule that actually prevents this is not "remember to check", it's "never commit to a branch without creating it fresh from an up-to-date `main` first". Checking after the fact catches the mistake, it doesn't prevent it, only changing the habit does that.
