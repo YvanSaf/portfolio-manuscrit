@@ -38,6 +38,28 @@ CI (on every pull request): lint, TypeScript check, test build. Blocks the merge
 
 CD (on push to `main`): production build, sync to S3, CloudFront cache invalidation.
 
+## Frontend architecture
+
+The site is one long scrolling page, split into one React component per visual section (`CoverSpread`, `Transfo`, `Planches`, `Outils`, `Certifs`, `Footer`), all mounted together in `App.tsx`. A `PageChrome` component holds everything that spans the whole page rather than one section: the sound toggle, the side margins, the paper grain texture.
+
+### Content kept separate from components
+
+All visible text lives in `src/content/` (`fr.ts` for section copy, `eggs.ts` for the hidden quotes), not inlined in JSX. Components import from there instead of hardcoding strings. Nothing else about internationalization exists yet, there is only a French version today, but this separation means adding a second language later is a matter of adding a new content file and a way to switch between them, not rewriting every component.
+
+### Animation stays close to the original, on purpose
+
+Scroll-driven effects (the page turn on the cover, the character frame-by-frame animation, the reveal-on-scroll used across sections) are built with GSAP and ScrollTrigger, wired through small hooks (`useCoverTurn`, `useCharScrollAnimation`, `useScrollReveal`) rather than rewritten as React state. [ADR 0003](./decisions/0003-vite-react-vs-nextjs.md) already made the case for this: this kind of imperative, canvas- and timeline-driven code does not get simpler by forcing it through `useState`, it gets harder to reason about. The hooks exist to give this code a proper lifecycle (mount, clean up on unmount), not to make it declarative.
+
+The Web Audio sound effects (`src/lib/sound.ts`) follow the same logic: a small framework-free module, not a hook, since an `AudioContext` is a single browser-wide resource, not something tied to one component's lifecycle.
+
+### The easter egg system
+
+Six hidden quotes, one per section, share a single `TomoeEgg` component and one `EggBubbleProvider` (React context) that owns the popup's position and content. Only the quote data (`src/content/eggs.ts`) differs between sections, adding a new one elsewhere on the site means dropping in `<TomoeEgg id="..." />` and adding one entry to that file, not writing a new popup.
+
+### What is built and what is not, honestly
+
+The `#sketch-canvas` element and the ink-trail cursor effect from the original design exist in the markup but are not wired up yet, this is tracked as known follow-up work, not an oversight to be discovered later.
+
 ## What is intentionally not here
 
 No database, the site is fully static, no dynamic data to store server side.
