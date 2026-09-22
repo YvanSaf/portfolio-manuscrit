@@ -46,7 +46,7 @@ export default function CoverSpread() {
               {t.plateLabel}
             </div>
 
-            <h1 className="font-anime-ace font-bold uppercase leading-[0.95] tracking-[-1px] text-[clamp(1.85rem,4.8vw,3.4rem)] text-ink">
+            <h1 className="font-anime-ace font-bold uppercase leading-[1.15] tracking-[-1px] text-[clamp(1.85rem,4.8vw,3.4rem)] text-ink">
               {t.titleBefore} <em className="not-italic text-red">{t.titleEm}</em>
               <br />
               {t.titleAfter}
