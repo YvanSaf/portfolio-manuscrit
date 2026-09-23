@@ -710,3 +710,37 @@ footer h2 {
     grid-template-columns: 1fr;
   }
 }
+
+.lang-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 80px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--paper-white);
+  border: 2.5px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  transition: transform 0.15s ease;
+}
+
+.lang-toggle:hover {
+  transform: scale(1.06);
+}
+
+@media (max-width: 700px) {
+  .lang-toggle {
+    bottom: 16px;
+    right: 68px;
+    width: 42px;
+    height: 42px;
+  }
+}
