@@ -3,9 +3,11 @@ import { useContent } from "../hooks/useContent";
 import { isSoundOn, setSoundOn, tick } from "../lib/sound";
 import { toHexAscii } from "../lib/text";
 import { useGrainParallax } from "../hooks/useGrainParallax";
+import { useLanguage } from "../hooks/useLanguage";
 
 export default function PageChrome() {
   const { chrome: t } = useContent();
+  const { lang, setLang } = useLanguage();
   const [soundOn, setSoundOnState] = useState(isSoundOn());
 
   useGrainParallax("grain-svg");
@@ -71,6 +73,14 @@ export default function PageChrome() {
             />
           </svg>
         )}
+      </button>
+      <button
+        className="lang-toggle"
+        type="button"
+        onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+        title={lang === "fr" ? "Switch to English" : "Passer en français"}
+      >
+        {lang === "fr" ? "EN" : "FR"}
       </button>
     </>
   );
