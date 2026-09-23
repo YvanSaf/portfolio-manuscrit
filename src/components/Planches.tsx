@@ -1,10 +1,10 @@
-import { fr } from "../content/fr";
+import { useContent } from "../hooks/useContent";
 import TomoeEgg from "./TomoeEgg";
 
 const panelClasses = ["panel p1 reveal-up", "panel p2 reveal-up", "panel p3 reveal-up", "panel p4 reveal-up"];
 
 export default function Planches() {
-  const { planches: t } = fr;
+  const { planches: t } = useContent();
 
   return (
     <section className="planches mx-auto max-w-[1100px] px-7 py-24">

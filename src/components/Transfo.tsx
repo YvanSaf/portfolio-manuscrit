@@ -1,10 +1,10 @@
-import { fr } from "../content/fr";
+import { useContent } from "../hooks/useContent";
 import TomoeEgg from "./TomoeEgg";
 import { useCharFrames } from "../hooks/useCharFrames";
 import { useCharScrollAnimation } from "../hooks/useCharScrollAnimation";
 
 export default function Transfo() {
-  const { transfo: t } = fr;
+  const { transfo: t } = useContent();
   const drawFrameRef = useCharFrames("char-canvas", "char-stage");
   useCharScrollAnimation(".transfo", drawFrameRef);
 

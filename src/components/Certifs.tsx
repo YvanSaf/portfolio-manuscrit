@@ -1,9 +1,9 @@
 import type { CSSProperties } from "react";
-import { fr } from "../content/fr";
+import { useContent } from "../hooks/useContent";
 import TomoeEgg from "./TomoeEgg";
 
 export default function Certifs() {
-  const { certifs: t } = fr;
+  const { certifs: t } = useContent();
 
   return (
     <section className="certifs mx-auto max-w-[1100px] border-t border-dashed border-guide px-7 py-24">
