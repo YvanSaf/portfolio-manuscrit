@@ -1,6 +1,7 @@
 import PageChrome from "./components/PageChrome";
 import CoverSpread from "./components/CoverSpread";
 import { EggBubbleProvider } from "./context/EggBubbleProvider";
+import { LanguageProvider } from "./context/LanguageProvider";
 import Transfo from "./components/Transfo";
 import Planches from "./components/Planches";
 import { useScrollReveal } from "./hooks/useScrollReveal";
@@ -13,16 +14,18 @@ export default function App() {
   useScrollReveal();
   usePanelClickSound();
   return (
-    <EggBubbleProvider>
-      <PageChrome />
-      <main>
-        <CoverSpread />
-        <Transfo />
-        <Planches />
-        <Outils />
-        <Certifs />
-        <Footer />
-      </main>
-    </EggBubbleProvider>
+    <LanguageProvider>
+      <EggBubbleProvider>
+        <PageChrome />
+        <main>
+          <CoverSpread />
+          <Transfo />
+          <Planches />
+          <Outils />
+          <Certifs />
+          <Footer />
+        </main>
+      </EggBubbleProvider>
+    </LanguageProvider>
   );
 }

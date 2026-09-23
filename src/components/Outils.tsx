@@ -1,8 +1,8 @@
-import { fr } from "../content/fr";
+import { useContent } from "../hooks/useContent";
 import TomoeEgg from "./TomoeEgg";
 
 export default function Outils() {
-  const { outils: t } = fr;
+  const { outils: t } = useContent();
 
   return (
     <section className="outils mx-auto max-w-[1100px] px-7 py-24">

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { eggs, type EggId } from "../content/eggs";
+import { eggsByLang, type EggId } from "../content/eggs";
 import { tick } from "../lib/sound";
 import { EggBubbleContext } from "./eggBubbleContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 interface BubbleState {
   visible: boolean;
@@ -16,6 +17,7 @@ const BUBBLE_WIDTH = 320;
 const BUBBLE_MARGIN = 20;
 
 export function EggBubbleProvider({ children }: { children: ReactNode }) {
+  const { lang } = useLanguage();
   const [state, setState] = useState<BubbleState>({
     visible: false,
     top: 0,
@@ -31,7 +33,7 @@ export function EggBubbleProvider({ children }: { children: ReactNode }) {
   }
 
   function showBubble(id: EggId, target: HTMLElement) {
-    const entry = eggs.find((e) => e.id === id);
+    const entry = eggsByLang[lang].find((e) => e.id === id);
     if (!entry) return;
 
     tick();

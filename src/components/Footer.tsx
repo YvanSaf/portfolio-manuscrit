@@ -1,4 +1,4 @@
-import { fr } from "../content/fr";
+import { useContent } from "../hooks/useContent";
 import TomoeEgg from "./TomoeEgg";
 
 function ContactIcon({ icon, label }: { icon: string; label: string }) {
@@ -19,7 +19,7 @@ function ContactIcon({ icon, label }: { icon: string; label: string }) {
 }
 
 export default function Footer() {
-  const { footer: t } = fr;
+  const { footer: t } = useContent();
 
   return (
     <footer>

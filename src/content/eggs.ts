@@ -90,4 +90,4 @@ export const eggsByLang: Record<Lang, EggEntry[]> = {
   fr: eggsFr,
   en: eggsEn,
 };
-export const eggs = eggsFr;
+//export const eggs = eggsFr;

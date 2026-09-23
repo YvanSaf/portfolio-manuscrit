@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { fr } from "../content/fr";
+import { useContent } from "../hooks/useContent";
 import { isSoundOn, setSoundOn, tick } from "../lib/sound";
 import { toHexAscii } from "../lib/text";
 import { useGrainParallax } from "../hooks/useGrainParallax";
 
 export default function PageChrome() {
-  const { chrome: t } = fr;
+  const { chrome: t } = useContent();
   const [soundOn, setSoundOnState] = useState(isSoundOn());
 
   useGrainParallax("grain-svg");
