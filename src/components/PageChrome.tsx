@@ -49,6 +49,7 @@ export default function PageChrome() {
       <button
         className="sound-toggle magnetic"
         type="button"
+        data-cursor="link"
         aria-pressed={soundOn}
         title={t.soundToggleLabel}
         onClick={handleToggle}
@@ -77,6 +78,7 @@ export default function PageChrome() {
       <button
         className="lang-toggle"
         type="button"
+        data-cursor="link"
         onClick={() => setLang(lang === "fr" ? "en" : "fr")}
         title={lang === "fr" ? "Switch to English" : "Passer en français"}
       >
