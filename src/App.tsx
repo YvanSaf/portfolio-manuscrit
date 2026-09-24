@@ -9,12 +9,14 @@ import { usePanelClickSound } from "./hooks/usePanelClickSound";
 import Outils from "./components/Outils";
 import Certifs from "./components/Certifs";
 import Footer from "./components/Footer";
+import CustomCursor from "./components/CustomCursor";
 
 export default function App() {
   useScrollReveal();
   usePanelClickSound();
   return (
     <LanguageProvider>
+      <CustomCursor />
       <EggBubbleProvider>
         <PageChrome />
         <main>

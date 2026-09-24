@@ -744,3 +744,72 @@ footer h2 {
     height: 42px;
   }
 }
+
+@media (pointer: fine) {
+  html,
+  a,
+  button,
+  .panel {
+    cursor: none;
+  }
+}
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+#custom-cursor svg {
+  display: block;
+  overflow: visible;
+}
+
+#custom-cursor .c-default,
+#custom-cursor .c-link {
+  transform-origin: 17px 17px;
+  transform: rotate(var(--rot, -45deg));
+  transition: opacity 0.12s ease;
+}
+
+#custom-cursor .c-link,
+#custom-cursor .c-stamp {
+  display: none;
+  opacity: 0;
+}
+
+#custom-cursor[data-state="link"] .c-default {
+  display: none;
+}
+#custom-cursor[data-state="link"] .c-link {
+  display: block;
+  opacity: 1;
+}
+#custom-cursor[data-state="stamp"] .c-default {
+  display: none;
+}
+#custom-cursor[data-state="stamp"] .c-stamp {
+  display: block;
+  opacity: 1;
+}
+
+#custom-cursor .c-stamp {
+  transform-origin: center;
+  animation: stamp-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes stamp-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
