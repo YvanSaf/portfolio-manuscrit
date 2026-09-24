@@ -10,10 +10,13 @@ import Outils from "./components/Outils";
 import Certifs from "./components/Certifs";
 import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
+import { useMagneticButtons } from "./hooks/useMagneticButtons";
 
 export default function App() {
   useScrollReveal();
   usePanelClickSound();
+  useMagneticButtons();
+
   return (
     <LanguageProvider>
       <CustomCursor />
